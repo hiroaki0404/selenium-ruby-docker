@@ -9,10 +9,12 @@ MAINTAINER hiroaki0404@gmail.com
 ## login: docker
 ## password: docker
 
-RUN apt-get update -y && apt-get install -y openssh-server openjdk-7-jre iceweasel-l10n-ja sudo locales fonts-ipafont && sed -i 's/#.*ja_JP\.UTF/ja_JP\.UTF/' /etc/locale.gen && locale-gen && update-locale LANG=ja_JP.UTF-8
+# Java8
+RUN echo deb http://http.debian.net/debian jessie-backports main >> /etc/apt/sources.list
+RUN apt-get update -y && apt-get install -y openssh-server openjdk-8-jre iceweasel-l10n-ja sudo locales fonts-ipafont && sed -i 's/#.*ja_JP\.UTF/ja_JP\.UTF/' /etc/locale.gen && locale-gen && update-locale LANG=ja_JP.UTF-8
 ENV LANG ja_JP.UTF-8
 ENV LC_CTYPE ja_JP.UTF-8
-RUN curl "http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.0.jar" -o /opt/selenium-server-standalone.jar
+RUN curl "http://selenium-release.storage.googleapis.com/3.0/selenium-server-standalone-3.0.1.jar" -o /opt/selenium-server-standalone.jar
 RUN gem install nokogiri -- --use-system-libraries=true --with-xml2-include=/usr/include/libxml2/
 RUN bundle config build.nokogiri --use-system-libraries
 RUN /usr/sbin/useradd -m docker -G sudo -s /bin/bash
